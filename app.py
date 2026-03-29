@@ -32,33 +32,33 @@ def get_price_data():
             if trend == "RISING":
                 advice = "Price is LOW but rising -- plug in NOW before it goes up!"
                 color = "#f59e0b"
-                emoji = "\u26a1"
+                emoji = "&#9889;"
             else:
                 advice = "GREAT time to plug in! Price is low."
                 color = "#22c55e"
-                emoji = "\u2705"
+                emoji = "&#9989;"
         elif current_price < 6:
             if trend == "FALLING":
                 advice = "Price is OK and dropping -- could wait a bit for even cheaper."
                 color = "#3b82f6"
-                emoji = "\ud83d\udcc9"
+                emoji = "&#128201;"
             else:
                 advice = "Price is OK. Fine to charge."
                 color = "#3b82f6"
-                emoji = "\ud83d\udc4d"
+                emoji = "&#128077;"
         elif current_price < 10:
             if trend == "FALLING":
                 advice = "Price is high but coming down -- wait a little longer."
                 color = "#f59e0b"
-                emoji = "\u23f3"
+                emoji = "&#9203;"
             else:
                 advice = "Price is HIGH. Wait for it to drop."
                 color = "#ef4444"
-                emoji = "\u274c"
+                emoji = "&#10060;"
         else:
             advice = "Price is VERY HIGH. Definitely wait!"
             color = "#ef4444"
-            emoji = "\ud83d\udea8"
+            emoji = "&#128680;"
 
         recent_prices = [{"price": float(r["price"]), "time": r["millisUTC"]} for r in recent_data[:12]]
 
@@ -146,7 +146,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </head>
 <body>
 <div class="hero">
-<h1>\u26a1 <span>EV Charge</span> Notify</h1>
+<h1>&#9889; <span>EV Charge</span> Notify</h1>
 <p>Real-time ComEd pricing for EV owners</p>
 </div>
 <div class="dashboard">
@@ -158,7 +158,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="loading">Loading chart...</div>
 </div>
 <div class="notify-card">
-<h2>\ud83d\udd14 Get Free Alerts</h2>
+<h2>&#128276; Get Free Alerts</h2>
 <p>Get push notifications when it's a good time to charge</p>
 <div class="steps">
 <div><span class="step-num">1</span> Install the <b>ntfy</b> app (free)</div>
@@ -167,11 +167,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 <a class="btn" href="https://ntfy.sh/podrid-ev-charger" target="_blank">Open in ntfy</a>
 <br>
-<button class="check-btn" onclick="sendCheck()">\ud83d\udce1 Send Price Check Now</button>
+<button class="check-btn" onclick="sendCheck()">&#128225; Send Price Check Now</button>
 <div id="checkResult" style="margin-top:8px;font-size:0.85em;color:#94a3b8"></div>
 </div>
 <div class="footer">
-Built by the Podrid family \u26a1 Powered by ComEd Hourly Pricing
+Built by the Podrid family &#9889; Powered by ComEd Hourly Pricing
 </div>
 </div>
 <script>
@@ -181,7 +181,7 @@ const r=await fetch('/api/price');
 const d=await r.json();
 if(d.error){document.getElementById('priceCard').innerHTML='<div class="loading">Could not load price</div>';return}
 document.getElementById('priceCard').innerHTML=
-'<div class="price-big" style="color:'+d.color+'">'+d.price.toFixed(1)+'<span class="price-unit"> \u00a2/kWh</span></div>'+
+'<div class="price-big" style="color:'+d.color+'">'+d.price.toFixed(1)+'<span class="price-unit"> c/kWh</span></div>'+
 '<div class="trend-badge" style="background:'+d.color+'22;color:'+d.color+'">'+d.arrow+' '+d.trend+'</div>'+
 '<div class="advice-text">'+d.emoji+' '+d.advice+'</div>'+
 '<div class="updated">Updated '+d.time+'</div>';
@@ -201,7 +201,7 @@ document.getElementById('chartCard').innerHTML='<h3>Last 60 Minutes</h3><div cla
 async function sendCheck(){
 const el=document.getElementById('checkResult');
 el.textContent='Sending...';
-try{const r=await fetch('/check-price');const t=await r.text();el.textContent=t==='OK'?'\u2705 Notification sent!':'Error: '+t}
+try{const r=await fetch('/check-price');const t=await r.text();el.textContent=t==='OK'?'Notification sent!':'Error: '+t}
 catch(e){el.textContent='Failed to send'}}
 loadPrice();
 setInterval(loadPrice,300000);
