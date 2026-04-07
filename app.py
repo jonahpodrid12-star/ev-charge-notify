@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request
 import requests
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import json
 import os
+
+CHICAGO_TZ = ZoneInfo("America/Chicago")
 
 app = Flask(__name__)
 
@@ -115,7 +118,7 @@ def get_price_data():
             "color": color,
             "emoji": emoji,
             "recent": recent_prices,
-            "time": datetime.now().strftime("%I:%M %p")
+            "time": datetime.now(CHICAGO_TZ).strftime("%I:%M %p")
         }
     except Exception as e:
         return {"error": str(e)[:100]}
@@ -310,7 +313,7 @@ document.getElementById('priceCard').innerHTML=
 '<div class="price-big" style="color:'+d.color+'">'+d.price.toFixed(1)+'<span class="price-unit"> c/kWh</span></div>'+
 '<div class="trend-badge" style="background:'+d.color+'22;color:'+d.color+'">'+d.arrow+' '+d.trend+'</div>'+
 '<div class="advice-text">'+d.emoji+' '+d.advice+'</div>'+
-'<div class="updated">Updated '+d.time+'</div>';
+'<div class="updated">Updated '+d.time+' CT</div>';
 }catch(e){document.getElementById('priceCard').innerHTML='<div class="loading">Could not load price</div>'}}
 
 // Send a test notification to all subscribed phones
