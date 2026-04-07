@@ -242,11 +242,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="loading">Loading live price...</div>
 </div>
 
-<div class="chart-card" id="chartCard">
-<h3>Last 60 Minutes</h3>
-<div class="loading">Loading chart...</div>
-</div>
-
 <div class="setup-card">
 <h2>&#128241; Get Free Alerts on Your Phone</h2>
 <p class="subtitle">Takes 2 minutes -- works on iPhone and Android</p>
@@ -316,20 +311,6 @@ document.getElementById('priceCard').innerHTML=
 '<div class="trend-badge" style="background:'+d.color+'22;color:'+d.color+'">'+d.arrow+' '+d.trend+'</div>'+
 '<div class="advice-text">'+d.emoji+' '+d.advice+'</div>'+
 '<div class="updated">Updated '+d.time+'</div>';
-
-// Build the bar chart from recent price data
-if(d.recent&&d.recent.length){
-const prices=d.recent.map(r=>r.price).reverse();
-const max=Math.max(...prices,1);
-let bars='';let labels='';
-for(let i=0;i<prices.length;i++){
-const h=Math.max((prices[i]/max)*100,4);
-const c=prices[i]<3?'#22c55e':prices[i]<6?'#3b82f6':prices[i]<10?'#f59e0b':'#ef4444';
-bars+='<div class="bar" style="height:'+h+'%;background:'+c+'" data-label="'+prices[i].toFixed(1)+'c"></div>';
-labels+='<span>'+(i%3===0?(prices.length-i)*5+'m':'')+'</span>';
-}
-document.getElementById('chartCard').innerHTML='<h3>Last 60 Minutes</h3><div class="bar-chart">'+bars+'</div><div class="time-labels">'+labels+'</div>';
-}
 }catch(e){document.getElementById('priceCard').innerHTML='<div class="loading">Could not load price</div>'}}
 
 // Send a test notification to all subscribed phones
